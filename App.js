@@ -9,6 +9,7 @@ const Stack = createNativeStackNavigator();
 import Home from "./src/screens/home";
 import { header } from "./src/styles/body";
 import Atrasos from "./src/screens/visualizarAtraso";
+import QRCodeScanner from "./src/screens/scannqrcode";
 
 export default function App() {
   const [nomeAluno, setNomeAluno] = useState("");
@@ -21,7 +22,7 @@ export default function App() {
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={Home} options={header} />
         <Stack.Screen name="Atrasos" component={Atrasos} options={header} />
-        {/*<Stack.Screen name="Atrasos" component={Login} options={header}/>*/}
+        <Stack.Screen name="QRCodeScanner" component={QRCodeScanner} />
       </Stack.Navigator>
     </NavigationContainer>
   );
