@@ -6,11 +6,16 @@ import {
   TextInput,
   TouchableOpacity,
   StatusBar,
+  Alert,
+  ImageBackground,
+  ScrollView
 } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
-import { styles } from "../styles/body"; // Verifique o caminho correto
-import { form, picker } from "../styles/form"; // Verifique o caminho correto
-import { urlAtrasoEmulador, urlCursoEmulador, urlModuloEmulador, urlPeriodoEmulador } from "../urls/api";
+import { styles } from "../styles/body";
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { form, picker } from "../styles/form"; 
+import { urlAtrasoEmulador, urlAtrasoNgrok, urlCursoEmulador, urlCursoNgrok, urlModuloEmulador, urlModuloNgrok, urlPeriodoEmulador, urlPeriodoNgrok } from "../urls/api";
+import backgroundImage from '../img/pontetecback.gif'
 
 export default function Home({ navigation }) {
   const [nomeAluno, setNomeAluno] = useState("");
@@ -42,12 +47,13 @@ export default function Home({ navigation }) {
   const enviarDados = async () => {
     // Verifica se todos os campos estão preenchidos
     if (!nomeAluno || !periodo || !modulo || !curso) {
+      Alert.alert("Todos os campos devem ser prenchidos");
       console.error("Todos os campos devem ser preenchidos.");
       return; // Não enviar a requisição
     }
 
     try {
-      const response = await fetch(urlAtrasoEmulador, {
+      const response = await fetch(urlAtrasoNgrok, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -76,14 +82,14 @@ export default function Home({ navigation }) {
       setModulo(null);
       setCurso(null);
 
-      alert('Usuário cadastrado com sucesso!');
+      Alert.alert('Usuário cadastrado com sucesso!');
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
       <View style={form.pickerWrapper}>
         <Text style={form.label}>Nome do Aluno:</Text>
         <TextInput
@@ -133,41 +139,37 @@ export default function Home({ navigation }) {
       </View>
 
       <View style={{ flexDirection: 'row' }}>
-        <View style={{ flexDirection: 'column' }}>
+        <View style={{ flexDirection: 'column' , marginTop:9}}>
           <TouchableOpacity
             style={form.button}
             onPress={() => navigation.navigate("Atrasos")}
           >
-            <Text style={[form.label, { fontWeight: "500" }]}>
-              Ir aos Atrasos
+            <Text style={[form.labelButton, { fontWeight: "500"}]}>
+              Atrasos
             </Text>
           </TouchableOpacity>
         </View>
 
         <View style={{ flexDirection: 'column', marginTop: 10 }}>
           <TouchableOpacity style={form.button} onPress={enviarDados}>
-            <Text style={[form.label, { fontWeight: "500" }]}>Enviar</Text>
+            <Text style={[form.labelButton, { fontWeight: "500" }]}>Enviar</Text>
           </TouchableOpacity>
         </View>
       </View>
 
       <View style={{ flexDirection: 'column' }}>
-          <TouchableOpacity
-            style={form.button}
-            onPress={() => navigation.navigate("QRCodeScanner")}
-          >
-            <Text style={[form.label, { fontWeight: "500" }]}>
-              Escanear QR Code
-            </Text>
+      <TouchableOpacity style={styles.qrButton} onPress={() => navigation.navigate("QRCodeScanner")}>
+            <Icon name="qr-code" size={30} color="white" />
           </TouchableOpacity>
         </View>
-    </SafeAreaView>
+    </ImageBackground>
+
   );
 }
 
 // Funções para buscar dados da API
 const fetchPeriodos = async () => {
-  const response = await fetch(urlPeriodoEmulador);
+  const response = await fetch(urlPeriodoNgrok);
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
@@ -176,7 +178,7 @@ const fetchPeriodos = async () => {
 };
 
 const fetchModulos = async () => {
-  const response = await fetch(urlModuloEmulador);
+  const response = await fetch(urlModuloNgrok);
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
@@ -185,7 +187,7 @@ const fetchModulos = async () => {
 };
 
 const fetchCursos = async () => {
-  const response = await fetch(urlCursoEmulador);
+  const response = await fetch(urlCursoNgrok);
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }

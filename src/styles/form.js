@@ -16,16 +16,20 @@ export const form = StyleSheet.create({
   pickerWrapper: {
     overflow: "hidden",
     paddingHorizontal: 30,
-    
+    paddingTop:100
   },
   label:{
-    fontSize:16
+    fontSize:16,
+  },
+  labelButton:{
+    fontSize:16,
+    color:'#fff'
   },
   button: {
-    backgroundColor:'#AFFFFF',
+    backgroundColor:'#000',
     alignItems: 'center',
     margin:30,
-    padding: 10,
+    padding: 15,
     borderRadius:10,
     width:100,
   },

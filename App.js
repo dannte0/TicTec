@@ -10,6 +10,7 @@ import Home from "./src/screens/home";
 import { header } from "./src/styles/body";
 import Atrasos from "./src/screens/visualizarAtraso";
 import QRCodeScanner from "./src/screens/scannqrcode";
+import SplashScreen from "./src/screens/splash";
 
 export default function App() {
   const [nomeAluno, setNomeAluno] = useState("");
@@ -19,10 +20,11 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="Splash">
         <Stack.Screen name="Home" component={Home} options={header} />
         <Stack.Screen name="Atrasos" component={Atrasos} options={header} />
-        <Stack.Screen name="QRCodeScanner" component={QRCodeScanner} />
+        <Stack.Screen name="QRCodeScanner" component={QRCodeScanner} options={header}/>
+        <Stack.Screen name="Splash" component={SplashScreen} options={{headerShown:false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

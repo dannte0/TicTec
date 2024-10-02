@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, Button, StyleSheet, Alert } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import { urlAtrasoCasa, urlAtrasoEmulador } from "../urls/api";
+import { urlAtrasoCasa, urlAtrasoEmulador, urlAtrasoNgrok } from "../urls/api";
 
 export default function QRCodeScanner({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
@@ -24,11 +24,11 @@ export default function QRCodeScanner({ navigation }) {
 
       Alert.alert(
         "QR Code Lido",
-        `Tipo: ${type}\nNome: ${qrData.nomeAluno}\nPeríodo: ${qrData.idPeriodo}\nMódulo: ${qrData.idModulo}\nCurso: ${qrData.idCurso}`,
+        `Nome: ${qrData.nomeAluno}\nPeríodo: ${qrData.idPeriodo}\nMódulo: ${qrData.idModulo}\nCurso: ${qrData.idCurso}`,
         [
           { text: "OK", onPress: async () => {
               try {
-                const response = await fetch(urlAtrasoEmulador, {
+                const response = await fetch(urlAtrasoNgrok, {
                   method: "POST",
                   headers: {
                     Accept: "application/json",
