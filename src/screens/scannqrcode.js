@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, Button, StyleSheet, Alert } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
+import { urlAtrasoCasa, urlAtrasoEmulador } from "../urls/api";
 
 export default function QRCodeScanner({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
@@ -27,7 +28,7 @@ export default function QRCodeScanner({ navigation }) {
         [
           { text: "OK", onPress: async () => {
               try {
-                const response = await fetch("http://10.0.2.2:8000/api/atraso", {
+                const response = await fetch(urlAtrasoEmulador, {
                   method: "POST",
                   headers: {
                     Accept: "application/json",

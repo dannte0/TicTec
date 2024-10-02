@@ -10,6 +10,7 @@ import {
 import RNPickerSelect from "react-native-picker-select";
 import { styles } from "../styles/body"; // Verifique o caminho correto
 import { form, picker } from "../styles/form"; // Verifique o caminho correto
+import { urlAtrasoEmulador, urlCursoEmulador, urlModuloEmulador, urlPeriodoEmulador } from "../urls/api";
 
 export default function Home({ navigation }) {
   const [nomeAluno, setNomeAluno] = useState("");
@@ -46,7 +47,7 @@ export default function Home({ navigation }) {
     }
 
     try {
-      const response = await fetch("http://10.0.2.2:8000/api/atraso", {
+      const response = await fetch(urlAtrasoEmulador, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -166,7 +167,7 @@ export default function Home({ navigation }) {
 
 // Funções para buscar dados da API
 const fetchPeriodos = async () => {
-  const response = await fetch("http://10.0.2.2:8000/api/periodo");
+  const response = await fetch(urlPeriodoEmulador);
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
@@ -175,7 +176,7 @@ const fetchPeriodos = async () => {
 };
 
 const fetchModulos = async () => {
-  const response = await fetch("http://10.0.2.2:8000/api/modulo");
+  const response = await fetch(urlModuloEmulador);
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
@@ -184,7 +185,7 @@ const fetchModulos = async () => {
 };
 
 const fetchCursos = async () => {
-  const response = await fetch("http://10.0.2.2:8000/api/curso");
+  const response = await fetch(urlCursoEmulador);
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
