@@ -21,7 +21,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Splash">
-        <Stack.Screen name="Home" component={Home} options={header} />
+        <Stack.Screen name="Home" component={Home} options={{headerShown:false}} />
         <Stack.Screen name="Atrasos" component={Atrasos} options={header} />
         <Stack.Screen name="QRCodeScanner" component={QRCodeScanner} options={header}/>
         <Stack.Screen name="Splash" component={SplashScreen} options={{headerShown:false}}/>

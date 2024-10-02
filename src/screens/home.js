@@ -82,8 +82,9 @@ export default function Home({ navigation }) {
       setModulo(null);
       setCurso(null);
 
-      Alert.alert('Usuário cadastrado com sucesso!');
+      Alert.alert('Atraso cadastrado com sucesso!');
     } catch (error) {
+      Alert.alert('Não foi possível cadastrar o atraso');
       console.error("Error:", error);
     }
   };
@@ -159,7 +160,7 @@ export default function Home({ navigation }) {
 
       <View style={{ flexDirection: 'column' }}>
       <TouchableOpacity style={styles.qrButton} onPress={() => navigation.navigate("QRCodeScanner")}>
-            <Icon name="qr-code" size={30} color="white" />
+            <Icon name="qr-code" size={35} color="white" />
           </TouchableOpacity>
         </View>
     </ImageBackground>
