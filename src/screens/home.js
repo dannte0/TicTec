@@ -74,6 +74,8 @@ export default function Home({ navigation }) {
       setPeriodo(null);
       setModulo(null);
       setCurso(null);
+
+      alert('Usuário cadastrado com sucesso!');
     } catch (error) {
       console.error("Error:", error);
     }

@@ -17,41 +17,48 @@ export default function QRCodeScanner({ navigation }) {
 
   const handleBarCodeScanned = async ({ type, data }) => {
     setScanned(true);
-    Alert.alert(
-      "QR Code Lido",
-      `Tipo: ${type}\nDados: ${data}`,
-      [
-        { text: "OK", onPress: async () => {
-            // Aqui você pode enviar os dados lidos para a API
-            try {
-              const response = await fetch("http://10.0.2.2:8000/api/atraso", {
-                method: "POST",
-                headers: {
-                  Accept: "application/json",
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  // Supondo que o QR Code contenha os dados necessários
-                  nomeAluno: data, // ou mapeie os dados conforme necessário
-                  idPeriodo: 1, // Exemplo
-                  idModulo: 1, // Exemplo
-                  idCurso: 1, // Exemplo
-                }),
-              });
+    try {
+      // Tenta fazer o parsing do QR code como JSON
+      const qrData = JSON.parse(data);
 
-              const json = await response.json();
-              console.log("Success:", json);
-              Alert.alert("Dados enviados com sucesso!");
-              navigation.navigate("Home"); // Navegar de volta para a tela inicial
-            } catch (error) {
-              console.error("Erro ao enviar os dados:", error);
-              Alert.alert("Erro ao enviar os dados.");
+      Alert.alert(
+        "QR Code Lido",
+        `Tipo: ${type}\nNome: ${qrData.nomeAluno}\nPeríodo: ${qrData.idPeriodo}\nMódulo: ${qrData.idModulo}\nCurso: ${qrData.idCurso}`,
+        [
+          { text: "OK", onPress: async () => {
+              try {
+                const response = await fetch("http://10.0.2.2:8000/api/atraso", {
+                  method: "POST",
+                  headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    nomeAluno: qrData.nomeAluno,
+                    idPeriodo: qrData.idPeriodo,
+                    idModulo: qrData.idModulo,
+                    idCurso: qrData.idCurso,
+                  }),
+                });
+
+                const json = await response.json();
+                console.log("Success:", json);
+                Alert.alert("Dados enviados com sucesso!");
+                navigation.navigate("Home");
+              } catch (error) {
+                console.error("Erro ao enviar os dados:", error);
+                Alert.alert("Erro ao enviar os dados.");
+              }
             }
-          }
-        },
-        { text: "Escanear Novamente", onPress: () => setScanned(false) }
-      ]
-    );
+          },
+          { text: "Escanear Novamente", onPress: () => setScanned(false) }
+        ]
+      );
+    } catch (error) {
+      console.error("Erro ao processar o QR Code:", error);
+      Alert.alert("Erro", "QR Code inválido.");
+      setScanned(false);
+    }
   };
 
   if (hasPermission === null) {
